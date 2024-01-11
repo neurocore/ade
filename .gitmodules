@@ -1,0 +1,7 @@
+[submodule "vendor/imgui"]
+	path = vendor/imgui
+	url = https://github.com/ocornut/imgui
+	branch = docking
+[submodule "vendor/sdl2"]
+	path = vendor/sdl2
+	url = https://github.com/libsdl-org/SDL
