@@ -12,8 +12,8 @@ Existing doom editors are powerful tools with various helpful features closing n
 
 ### Provide high performance
 
-- it's written on C++17
-- uses fast library based on immediate graphical mode [Dear Imgui](https://github.com/cnjinhao/nana/tree/master) for GUI rendering
+- it's written on C++14
+- uses fast library based on immediate graphical mode [Dear Imgui](https://github.com/ocornut/imgui) for GUI rendering
 
 ### Make mapping easier and more convenient
 
