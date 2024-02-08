@@ -105,6 +105,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\vendor\imgui;..\vendor\imgui\backends;..\vendor\sdl2\include;$(VcpkgCurrentInstalledDir)include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -123,6 +124,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\vendor\imgui;..\vendor\imgui\backends;..\vendor\sdl2\include;$(VcpkgCurrentInstalledDir)include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,9 +143,15 @@
     <ClInclude Include="..\vendor\imgui\imconfig.h" />
     <ClInclude Include="..\vendor\imgui\imgui.h" />
     <ClInclude Include="..\vendor\imgui\imgui_internal.h" />
-    <ClInclude Include="dockspace.h" />
-    <ClInclude Include="linedef.h" />
-    <ClInclude Include="map_format.h" />
+    <ClInclude Include="internal\dockspace.h" />
+    <ClInclude Include="archive\wad\wad.h" />
+    <ClInclude Include="archive\wad\linedef.h" />
+    <ClInclude Include="archive\wad\sector.h" />
+    <ClInclude Include="archive\wad\segment.h" />
+    <ClInclude Include="archive\wad\thing.h" />
+    <ClInclude Include="archive\wad\vertex.h" />
+    <ClInclude Include="archive\ade\map.h" />
+    <ClInclude Include="domain\complevel.h" />
     <ClInclude Include="types.h" />
   </ItemGroup>
   <ItemGroup>
@@ -154,8 +162,10 @@
     <ClCompile Include="..\vendor\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\vendor\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\vendor\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="dockspace.cpp" />
+    <ClCompile Include="internal\dockspace.cpp" />
+    <ClCompile Include="archive\wad\wad.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="types.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
