@@ -129,8 +129,8 @@ int main(int, char**)
 
   // Preparing work
 
-  ade::Wad wad("oku2v31.wad");
-  bool success = wad.read();
+  ade::Wad wad;
+  bool success = wad.open("../assets/wads/Haste.wad");
   if (!success) cout << "Wad not found\n";
 
   auto range = wad.get_map_range(1);
@@ -143,6 +143,10 @@ int main(int, char**)
     auto row = table[i];
     cout << row.x << ", " << row.y << " | " << row.angle << "\n";
   }
+
+  auto image = wad.get_image("TALLGRS4");
+  cout << "\nTALLGRS4 - " << image.head.w << ", " << image.head.h << "\n";
+  cout << image.spans.size() << "\n";
 
   // Main loop
   bool done = false;

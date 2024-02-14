@@ -1,4 +1,5 @@
 #include "types.h"
+#include <iostream>
 
 namespace ade {
 
@@ -17,9 +18,10 @@ ostream& operator<<(ostream& os, const Name& name)
   return os;
 }
 
+
 bool operator==(const Name& a, const Name& b)
 {
-  return strcmp(a.ch, b.ch);
+  return strncmp(a.ch, b.ch, 8) == 0;
 }
 
 Name::Name(const char* s)

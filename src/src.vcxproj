@@ -143,6 +143,7 @@
     <ClInclude Include="..\vendor\imgui\imconfig.h" />
     <ClInclude Include="..\vendor\imgui\imgui.h" />
     <ClInclude Include="..\vendor\imgui\imgui_internal.h" />
+    <ClInclude Include="archive\wad\patch.h" />
     <ClInclude Include="internal\dockspace.h" />
     <ClInclude Include="archive\wad\wad.h" />
     <ClInclude Include="archive\wad\linedef.h" />

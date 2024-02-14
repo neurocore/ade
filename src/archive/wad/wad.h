@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include "../../types.h"
+#include "patch.h"
 
 using std::ifstream;
 using std::string;
@@ -43,11 +44,11 @@ class Wad
   };
 
 public:
-  explicit Wad(string filename) : filename(filename) {}
-  ~Wad() { delete[] buffer; }
-  bool is_good() const { return init; }
+  ~Wad() { close(); }
+  bool is_good() const { return size > 0; }
   operator bool() const { return is_good(); }
-  bool read();
+  bool open(string filename);
+  void close();
 
   U32 get_lumps_n() { return is_good() ? head.lumps_n : 0; }
   LumpRange get_map_range(int map_n);
@@ -56,30 +57,43 @@ public:
   vector<T> get_map_table(LumpRange range, Name lump_name);
 
   template<class T>
-  vector<T> get_entities(Scope scope);
+  bool read_obj(T& obj, U32 offset = 0u, U32 index = 0u);
+
+  template<class T> // be sure that T is packed
+  vector<T> read_arr(U32 count, U32 offset = 0u);
+
+  /*template<class T>
+  vector<T> get_entities(Scope scope);*/
+
+  Patch get_image(Name lump_name);
 
 private:
-  string filename;
-  bool init = false;
+  U64 size = 0;
   char * buffer;
   Head head;
   vector<Lump> lumps;
 };
 
 template<class T> // be sure that T is packed
-void read_obj(char* buffer, T& obj, int offset = 0, int index = 0)
+bool Wad::read_obj(T& obj, U32 offset, U32 index)
 {
+  if (offset + index * sizeof(T) < 0) return false;
+  if (offset + (index + 1) * sizeof(T) > size) return false;
+
   char* result = reinterpret_cast<char*>(&obj);
   for (int i = 0; i < sizeof(T); i++)
   {
     result[i] = buffer[i + offset + index * sizeof(T)];
   }
+  return true;
 }
 
 template<class T> // be sure that T is packed
-vector<T> read_arr(char* buffer, U32 count, int offset = 0)
+vector<T> Wad::read_arr(U32 count, U32 offset)
 {
   vector<T> objs;
+  if (!size) return objs;
+
   objs.insert(objs.end(),
               reinterpret_cast<T*>(buffer + offset),
               reinterpret_cast<T*>(buffer + offset) + count);
@@ -89,13 +103,12 @@ vector<T> read_arr(char* buffer, U32 count, int offset = 0)
 template<class T>
 inline vector<T> Wad::get_map_table(LumpRange range, Name lump_name)
 {
-  if (init)
+  if (size > 0)
   for (U32 i = range.start; i < range.end; i++)
   {
     if (lumps[i].name == lump_name)
     {
-      return read_arr<T>(buffer,
-                         lumps[i].size / sizeof(T),
+      return read_arr<T>(lumps[i].size / sizeof(T),
                          lumps[i].offset);
     }
   }
