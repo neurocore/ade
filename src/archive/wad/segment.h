@@ -11,6 +11,10 @@ PACKED(struct Segment
   U16 linedef_id;
   U16 same_dir;
   U16 offset;
+
+  friend auto operator<=>(const Segment&, const Segment&) = default;
 });
+
+struct Node {};
 
 }

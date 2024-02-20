@@ -21,6 +21,8 @@ PACKED(struct Thing
   U16 angle;
   U16 thing_type;
   ThingFlags flags;
+
+  friend auto operator<=>(const Thing&, const Thing&) = default;
 });
 
 }

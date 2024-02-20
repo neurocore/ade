@@ -1,60 +1,47 @@
 #pragma once
 #include <vector>
 #include <string>
-#include <unordered_map>
 #include "../wad/vertex.h"
 #include "../wad/linedef.h"
 #include "../wad/sector.h"
+#include "../wad/segment.h"
 #include "../wad/thing.h"
+#include "../imgui.h"
+#include "../../internal/diff.h"
 
 using std::vector;
 using std::string;
-using std::unordered_map;
 
 namespace ade {
 
 // Dummies
-struct Sidedef {};
-struct SubSector {};
-struct Node {};
-struct Reject {};
-struct BlockMap {};
+struct Reject {};   // maybe just a string?
+struct BlockMap {}; // they are useless here
 
-struct Map
+class Map
 {
-  Name name;
+  string name;
   vector<Vertex> vertices;
   vector<Linedef> lines;
   vector<Sector> sectors;
+  vector<Segment> segments;
   vector<Thing> things;
 
-};
+public:
+  struct Memento
+  {
+    Diffs<string> name;
+    Diffs<vector<Vertex>> vertices;
+    Diffs<vector<Linedef>> lines;
+    Diffs<vector<Sector>> sectors;
+    Diffs<vector<Segment>> segments;
+    Diffs<vector<Thing>> things;
+  };
 
-struct Tex
-{
-  U16 w, h;
-  U16 x, y;
-
-
-};
-
-struct Sprite : public Tex
-{
-
-};
-
-struct Sound
-{
-
-};
-
-class Ade // project
-{
-  vector<Map> maps;
-  vector<Tex> walls;
-  vector<Tex> flats;
-  vector<Sprite> sprites;
-  unordered_map<Name, string> docs;
+public:
+  Memento get_updates(const Map & old) const;
+  void undo_updates(const Memento& memento);
+  void redo_updates(const Memento& memento);
 };
 
 }

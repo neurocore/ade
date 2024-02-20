@@ -25,6 +25,9 @@
 #include "domain/complevel.h"
 #include <iostream>
 
+#include "archive/wad/vertex.h"
+#include "internal/diff/dmp_diff.hpp"
+
 // This example can also compile and run with Emscripten! See 'Makefile.emscripten' for details.
 #ifdef __EMSCRIPTEN__
 #include "../libs/emscripten/emscripten_mainloop_stub.h"
@@ -101,8 +104,8 @@ int main(int, char**)
   ImGuiStyle& style = ImGui::GetStyle();
   if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
   {
-      style.WindowRounding = 0.0f;
-      style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+    style.WindowRounding = 0.0f;
+    style.Colors[ImGuiCol_WindowBg].w = 1.0f;
   }
 
   // Setup Platform/Renderer backends
@@ -129,6 +132,18 @@ int main(int, char**)
 
   // Preparing work
 
+  ade::Vertex a{ 1, 0 }, b{ 0, 1 }, c{ 2, 2 }, d{ 3, 4 };
+  vector<ade::Vertex> prev{ a, b, c }, curr{a, d};
+  auto diffs = MyersDiff<vector<ade::Vertex>>(prev, curr);
+  for (auto diff : diffs)
+  {
+    cout << (int)diff.operation << endl;
+    cout << (int)diff.text.from->x << endl;
+    cout << (int)diff.text.from->y << endl;
+  }
+  cout << endl;
+
+
   ade::Wad wad;
   bool success = wad.open("../assets/wads/Haste.wad");
   if (!success) cout << "Wad not found\n";
@@ -145,8 +160,8 @@ int main(int, char**)
   }
 
   auto image = wad.get_image("TALLGRS4");
-  cout << "\nTALLGRS4 - " << image.head.w << ", " << image.head.h << "\n";
-  cout << image.spans.size() << "\n";
+  cout << "\nTALLGRS4 - " << image.get_w() << ", " << image.get_h() << "\n";
+  cout << image.get_spans(19).size() << "\n";
 
   // Main loop
   bool done = false;
@@ -243,6 +258,15 @@ int main(int, char**)
 
       auto sizes = io.DisplaySize;
       ImGui::Text("Sizes = %f %f", sizes.x, sizes.y);
+
+      ImTextureID my_tex_id = io.Fonts->TexID;
+      float my_tex_w = (float)image.get_w();
+      float my_tex_h = (float)image.get_h();
+      ImVec2 uv_min = ImVec2(0.0f, 0.0f);
+      ImVec2 uv_max = ImVec2(1.0f, 1.0f);
+      ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f); // No tint
+      ImVec4 border_col = ImGui::GetStyleColorVec4(ImGuiCol_Border);
+      ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), uv_min, uv_max, tint_col, border_col);
 
       ImGui::SetWindowSize(sizes);
       ImGui::SetWindowPos(ImVec2(.0f, .0f));

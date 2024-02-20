@@ -91,22 +91,4 @@ public:
   void processMap() override {}
 };
 
-
-void check_flags(const CL2& flags) {
-  /*CL21::BlockLandMobs | CL21::BlockPlayers;*/
-}
-
-void check_flags(const CL9& flags) {
-}
-
-int main() {
-  CL2 vanilla_flags;
-  CL9 boom_flags;
-
-  check_flags(vanilla_flags);
-  check_flags(boom_flags);
-
-  return 0;
-}
-
 }

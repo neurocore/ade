@@ -12,6 +12,10 @@ PACKED(struct Linedef
   U16 action, tag;
   U16 front_sidedef;
   U16 back_sidedef;
+
+  friend auto operator<=>(const Linedef&, const Linedef&) = default;
 });
+
+struct Sidedef {};
 
 }

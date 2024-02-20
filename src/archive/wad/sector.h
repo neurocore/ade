@@ -13,6 +13,10 @@ PACKED(struct Sector
   U16 brightness;
   Specials special;
   U16 tag;
+
+  friend auto operator<=>(const Sector&, const Sector&) = default;
 });
+
+struct SubSector {};
 
 }

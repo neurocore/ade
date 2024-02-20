@@ -105,7 +105,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\vendor\imgui;..\vendor\imgui\backends;..\vendor\sdl2\include;$(VcpkgCurrentInstalledDir)include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -124,7 +124,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\vendor\imgui;..\vendor\imgui\backends;..\vendor\sdl2\include;$(VcpkgCurrentInstalledDir)include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,7 +143,11 @@
     <ClInclude Include="..\vendor\imgui\imconfig.h" />
     <ClInclude Include="..\vendor\imgui\imgui.h" />
     <ClInclude Include="..\vendor\imgui\imgui_internal.h" />
-    <ClInclude Include="archive\wad\patch.h" />
+    <ClInclude Include="archive\ade\project.h" />
+    <ClInclude Include="archive\ade\tex.h" />
+    <ClInclude Include="archive\wad\image.h" />
+    <ClInclude Include="internal\diff.h" />
+    <ClInclude Include="internal\diff\dmp_diff.hpp" />
     <ClInclude Include="internal\dockspace.h" />
     <ClInclude Include="archive\wad\wad.h" />
     <ClInclude Include="archive\wad\linedef.h" />
@@ -163,6 +167,8 @@
     <ClCompile Include="..\vendor\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\vendor\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\vendor\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="archive\ade\map.cpp" />
+    <ClCompile Include="archive\ade\tex.cpp" />
     <ClCompile Include="internal\dockspace.cpp" />
     <ClCompile Include="archive\wad\wad.cpp" />
     <ClCompile Include="main.cpp" />
