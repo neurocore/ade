@@ -7,7 +7,7 @@ PACKED(struct Vertex
 {
   S16 x, y;
 
-  friend auto operator<=>(const Thing&, const Thing&) = default;
+  friend auto operator<=>(const Vertex&, const Vertex&) = default;
 });
 
 }
